@@ -15,7 +15,7 @@ We require both express and body-parser packages.
 
 **4. Install Express:** Use `npm install express` to install the Express framework.
 
-**5. Install body-parser:** Use `npm install body-parser` to install the body-parser middleware.
+**5. Install body-parser:** `Use npm install body-parser` to install the body-parser middleware.
 
 At this point, You should have a package.json similar to this:
 
