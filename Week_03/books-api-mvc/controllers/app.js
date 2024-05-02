@@ -24,4 +24,3 @@ const validateBook = require("./middlewares/validateBook");
 
 app.post("/books", validateBook, booksController.createBook); // Add validateBook before createBook
 app.put("/books/:id", validateBook, booksController.updateBook); // Add validateBook before updateBook
-
