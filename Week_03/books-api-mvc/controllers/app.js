@@ -19,3 +19,9 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+
+const validateBook = require("./middlewares/validateBook");
+
+app.post("/books", validateBook, booksController.createBook); // Add validateBook before createBook
+app.put("/books/:id", validateBook, booksController.updateBook); // Add validateBook before updateBook
+
