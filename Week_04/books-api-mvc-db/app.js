@@ -6,7 +6,7 @@ const validateBook = require("./middlewares/validateBook");
 const bodyParser = require("body-parser");
 
 const app = express();
-const port = 3000; // Use environment variable or default port
+const port = 3000; // Use environment variable or default port 
 
 // Include body-parser middleware to handle JSON data
 app.use(bodyParser.json());
