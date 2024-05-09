@@ -44,7 +44,32 @@ class Book {
               result.recordset[0].author
             )
           : null; // Handle book not found
-      }
+        }
+
+    static async updateBook(id, newBookData) {
+        const connection = await sql.connect(dbConfig);
+        const sqlQuery = `UPDATE Books SET title = @title, author = @author WHERE id = @id;`;
+        const request = connection.request();
+
+        request.input("id", newBookData.id);
+        request.input("title", newBookData.title);
+        request.input("author", newBookData.author);
+        
+        await request.query(sqlQuery);
+        connection.close();
+        return this.getBookById(id);
+    }
+
+    static async deleteBook(id) {
+        const connection = await sql.connect(dbConfig);
+        const sqlQuery = `DELETE FROM Books WHERE id = @id;`;
+        const request = connection.request();
+        request.input("id", id);
+        const result = await request.query(sqlQuery);
+        connection.close();
+
+        return result.rowsAffected > 0;
+    }
 
     static async createBook(newBookData){
         const connection = await sql.connect(dbConfig);

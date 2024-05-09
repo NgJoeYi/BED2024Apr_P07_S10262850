@@ -15,6 +15,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 app.get("/books", bookController.getAllBooks);
 app.get("/books/:id", bookController.getBookById);
 app.post("/books", validateBook, bookController.createBook);
+app.put("/books/:id", validateBook, bookController.updateBook);
+app.delete("/books/:id", bookController.deleteBook);
 
 app.listen(port, async () =>{
     try {
