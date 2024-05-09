@@ -27,19 +27,19 @@ const getBookById = async (req, res) => {
 
 const updateBook = async (req, res) => {
     const bookId = parseInt(req.params.id);
-    const newBook = req.body;
-
+    const newBookData = req.body;
+  
     try {
-        const updatedBook = await Book.updatedBook(bookId);
-        if (!updatedBook) {
-            return res.status(404).send("Book not found");
-        }
-        res.json(updatedBook);
+      const updatedBook = await Book.updateBook(bookId, newBookData);
+      if (!updatedBook) {
+        return res.status(404).send("Book not found");
+      }
+      res.json(updatedBook);
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Error updating book");
+      console.error(error);
+      res.status(500).send("Error updating book");
     }
-};
+  };
 
 const deleteBook = async (req, res) => {
     const bookId = parseInt(req.params.id);

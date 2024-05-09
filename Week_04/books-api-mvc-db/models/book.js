@@ -46,19 +46,22 @@ class Book {
           : null; // Handle book not found
         }
 
-    static async updateBook(id, newBookData) {
-        const connection = await sql.connect(dbConfig);
-        const sqlQuery = `UPDATE Books SET title = @title, author = @author WHERE id = @id;`;
-        const request = connection.request();
-
-        request.input("id", newBookData.id);
-        request.input("title", newBookData.title);
-        request.input("author", newBookData.author);
+        static async updateBook(id, newBookData) {
+            const connection = await sql.connect(dbConfig);
         
-        await request.query(sqlQuery);
-        connection.close();
-        return this.getBookById(id);
-    }
+            const sqlQuery = `UPDATE Books SET title = @title, author = @author WHERE id = @id`; // Parameterized query
+        
+            const request = connection.request();
+            request.input("id", id);
+            request.input("title", newBookData.title || null); // Handle optional fields
+            request.input("author", newBookData.author || null);
+        
+            await request.query(sqlQuery);
+        
+            connection.close();
+        
+            return this.getBookById(id); // returning the updated book data
+          }
 
     static async deleteBook(id) {
         const connection = await sql.connect(dbConfig);
