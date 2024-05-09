@@ -1,9 +1,14 @@
 const express = require("express");
+const bookController = require("./controllers/booksController");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
+
+
+app.get("/books", bookController.getAllBooks);
+app.get("/books/:id", bookController.getBookById);
 
 app.listen(port, async () =>{
     try {
