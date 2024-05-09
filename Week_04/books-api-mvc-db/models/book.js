@@ -45,5 +45,18 @@ class Book {
             )
           : null; // Handle book not found
       }
+
+    static async createBook(newBookData){
+        const connection = await sql.connect(dbConfig);
+        const sqlQuery = `INSERT INTO Books (title, author) VALUES (@title, @author); SELECT SCOPE_IDENTITY() AS id;`;
+
+        const request = connection.request();
+        request.input("title", newBookData.title);
+        request.input("author", newBookData.author);
+
+        const result = await request.query(sqlQuery);
+        connection.close();
+        return this.getBookById(result.recordset[0].id);
     }
+}
 module.exports = Book; // so other files can import this 

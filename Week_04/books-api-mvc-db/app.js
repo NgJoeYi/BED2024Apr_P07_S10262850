@@ -2,13 +2,19 @@ const express = require("express");
 const bookController = require("./controllers/booksController");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
+const validateBook = require("./middlewares/validateBook");
+const bodyParser = require("body-parser");
 
 const app = express();
-const port = process.env.PORT || 3000; // Use environment variable or default port
+const port = 3000; // Use environment variable or default port
 
+// Include body-parser middleware to handle JSON data
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 
 app.get("/books", bookController.getAllBooks);
 app.get("/books/:id", bookController.getBookById);
+app.post("/books", validateBook, bookController.createBook);
 
 app.listen(port, async () =>{
     try {
